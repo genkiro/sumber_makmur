@@ -1,0 +1,332 @@
+<template name="layout">
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="{{pathFor 'homepage'}}">
+                        <span class="glyphicon glyphicon-home" style="font-size: 4em;"></span>
+                    </a>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'inboundForm'}}"><span class="glyphicon glyphicon-import" style="font-size: 4em;"></span><div>Brg Masuk</div></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'outboundForm'}}"><span class="glyphicon glyphicon-export" style="font-size: 4em;"></span><div>Brg Keluar</div></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'transactions'}}"><span class="glyphicon glyphicon-transfer" style="font-size: 4em;"></span><div>Transaksi</div></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'stock'}}"><span class="glyphicon glyphicon-equalizer" style="font-size: 4em;"></span><div>Stock Tiap Brg</div></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'itemList'}}"><span class="glyphicon glyphicon-barcode" style="font-size: 4em;"></span><div>Daftar Brg</div></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'stockReport'}}"><span class="glyphicon glyphicon-list-alt" style="font-size: 4em;"></span><div>Laporan Stok Brg</div></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                {{> yield}}
+            </div>
+        </div>
+
+    </div>
+
+</template>
+
+
+<template name="homepage">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Sumber Makmur</h1>
+            <p>Brg masuk, brg kluar, cek stock.</p>
+        </div>
+    </div>
+</template>
+
+<template name="inboundForm">
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-import"></span> Barang Masuk</h1>
+        <form>
+            <div class="container">
+                <div class="form-group col-md-3">
+                    <label for="date">Tanggal Transaksi:</label>
+                    <input type="text" class="form-control tanggal" id="date">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="who">Barang masuk dari:</label>
+                    <input type="text" class="form-control" id="who" placeholder="Kahatex Bandung">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="invoice">Nomer nota / bon:</label>
+                    <input type="text" class="form-control" id="invoice" placeholder="F79683">
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-group col-md-9 pagination-centered text-center">
+                    <table class="table col-md-9">
+                        <tbody>
+                        <tr>
+                            <th class="col-md-4">Nama barang</th>
+                            <th class="col-md-1">Jumlah</th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        <tr class="field">
+                            <td class="col-md-4">
+                                <input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" />
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity kodi" placeholder="50"/>
+                                    <div class="input-group-addon">kodi</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity lusin" placeholder="70"/>
+                                    <div class="input-group-addon">lusin</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity potong" placeholder="0"/>
+                                    <div class="input-group-addon">potong</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button id="addRow" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</template>
+
+<template name="outboundForm">
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-export"></span> Barang Keluar</h1>
+        <form>
+            <div class="container">
+                <div class="form-group col-md-3">
+                    <label for="date">Tanggal Transaksi:</label>
+                    <input type="text" class="form-control tanggal" id="date">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="pabrik">Barang dijual ke:</label>
+                    <input type="who" class="form-control" id="who" placeholder="Piala Kapasan">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="invoice">Nomer nota / bon:</label>
+                    <input type="text" class="form-control" id="invoice" placeholder="946">
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-group col-md-9 pagination-centered text-center">
+                    <table class="table col-md-9">
+                        <tbody>
+                        <tr>
+                            <th class="col-md-4">Nama barang</th>
+                            <th class="col-md-1">Jumlah</th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        <tr class="field">
+                            <td class="col-md-4">
+                                <input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" />
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity kodi" placeholder="50"/>
+                                    <div class="input-group-addon">kodi</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity lusin" placeholder="70"/>
+                                    <div class="input-group-addon">lusin</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control itemQuantity potong" placeholder="0"/>
+                                    <div class="input-group-addon">potong</div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button id="addRow" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</template>
+
+<template name="stock">
+    <div class="container col-md-5"><label for="itemToSearch">Nama Barang:</label><input type="text" class="form-control typeahead" id="itemToSearch" placeholder="Handuk KH 101"/></div>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nomer Bon / Nota</th>
+                    <th>Siapa</th>
+                    <th>Masuk</th>
+                    <th>Keluar</th>
+                    <th>Sisa</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="item">
+    <tr data-id="{{_id}}">
+        <td>{{name}}</td>
+        <td>{{rupiah price}} per {{grouping}}</td>
+        <td>{{rupiahPerOneItem price grouping}}</td>
+        <td><button class="btn btn-danger btn-sm deleteItem"><span class="glyphicon glyphicon-remove"></span></button></td>
+    </tr>
+</template>
+
+<template name="itemList">
+    <div class="container col-md-8">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Hrg Pokok</th>
+                    <th>Per Biji</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                    {{> item}}
+                {{else}}
+                    <tr><td>Kosong, masih belum diisi?</td><td></td><td></td><td></td></tr>
+                {{/each}}
+                <tr>
+                    <td class="col-md-5">
+                        <input type="text" class="form-control itemName" placeholder="Handuk KH 101">
+                    </td>
+                    <td class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-addon">Rp.</div>
+                            <input type="text" class="form-control itemPrice" placeholder="290 000">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-addon">per</div>
+                            <select class="form-control itemGrouping">
+                                <option>lusin</option>
+                                <option>kodi</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td><button id="addItem" class="btn btn-primary">Add</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="stockReport">
+    <h1><span class="glyphicon glyphicon-list-alt"></span> Stock Report</h1>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                    <th>Harga Pokok</th>
+                    <th class="text-right">Nilai</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="transactions">
+    <h1><span class="glyphicon glyphicon-transfer"></span> Transaksi</h1>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Tanggal Transaksi</th>
+                    <th>Nomer Bon / Nota</th>
+                    <th>Dengan Siapa?</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each transactions}}
+                {{> transaction}}
+            {{else}}
+                <tr><td>Kosong, belum ada transaksi</td><td></td><td></td><td></td></tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="transaction">
+    <tr data-txn-id="{{_id}}">
+        <td>{{dateStringOf date}}</td>
+        <td>{{invoiceNo}}</td>
+        <td>{{who}}</td>
+        <td><button class="btn btn-info txnInfo">Details</button></td>
+        <td><button class="btn btn-danger deleteTxn"><span class="glyphicon glyphicon-remove"></span></button></td>
+    </tr>
+</template>
