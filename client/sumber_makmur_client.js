@@ -204,12 +204,20 @@ Template.itemList.events({
 });
 
 Template.item.helpers({
+    /**
+     * Return the Rupiah formatted price of one item, provided: price of a certain grouping.
+     * @param price
+     * @param grouping
+     * @returns {*}
+     */
     rupiahPerOneItem: function (price, grouping) {
         var ret;
         if (grouping == 'kodi') {
             ret = price / 20;
         } else if (grouping == 'lusin') {
             ret = price / 12;
+        } else if (grouping == 'potong') {
+            ret = price;
         }
 
         return numeral(Math.round(ret)).format('$ 0,0[.]00');
@@ -261,7 +269,7 @@ Template.stockReport.rendered = function() {
     Meteor.call('createStockReport', function (error, result) {
         var total = 0;
         result.forEach(function (x) {
-            $('tbody').append('<tr><td>' + x.name + '</td><td>' + x.quantity + '</td><td>' + rupiahStr(x.price) + '</td><td class="text-right">' + rupiahStr(x.value) + '</td></tr>');
+            $('tbody').append('<tr><td>' + x.name + '</td><td>' + x.quantity + '</td><td>' + rupiahStr(x.price) + ' per ' + x.groupingName + '</td><td class="text-right">' + rupiahStr(x.value) + '</td></tr>');
             total = total + x.value;
         });
         $('tbody').append('<tr><td></td><td></td><td></td><td class="text-right"><strong>Total: </strong>' + rupiahStr(total) + '</td></tr>');
