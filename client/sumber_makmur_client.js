@@ -183,7 +183,7 @@ Template.itemList.rendered = function () {
 
 Template.itemList.helpers({
     items: function () {
-        return Items.find({});
+        return Items.find({}, {sort: {name: 1}});
     }
 });
 
