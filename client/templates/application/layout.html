@@ -233,6 +233,8 @@
         <td>{{name}}</td>
         <td>{{rupiah price}} per {{grouping}}</td>
         <td>{{rupiahPerOneItem price grouping}}</td>
+        <td><button class="btn btn-default btn-sm editItemName">Edit name</button></td>
+        <td><button class="btn btn-default btn-sm editItemPrice">Edit price</button></td>
         <td><button class="btn btn-danger btn-sm deleteItem"><span class="glyphicon glyphicon-remove"></span></button></td>
     </tr>
 </template>
@@ -245,6 +247,8 @@
                     <th>Nama</th>
                     <th>Hrg Pokok</th>
                     <th>Per Biji</th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -275,6 +279,7 @@
                         </div>
                     </td>
                     <td><button id="addItem" class="btn btn-primary">Add</button></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
