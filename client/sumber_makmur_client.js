@@ -265,10 +265,10 @@ Template.item.events({
         var item = Items.findOne({_id: itemId});
         var oldPrice = item.price;
 
-        alertify.prompt('Ubah harga brg "' + item.name + '" dr ' + rupiahStr(oldPrice) + ' menjadi berapa Rupiah?', oldPrice,
+        alertify.prompt('Ubah harga brg "' + item.name + '" dr ' + rupiahStr(oldPrice) + ' menjadi berapa Rupiah per ' + item.grouping + '?', oldPrice,
           function (evt, newPrice) {
             Items.update({ _id: itemId }, { $set: { price: newPrice }}, function () {
-                alertify.success('Harga brg "' + item.name + '" terubah dr ' + rupiahStr(oldPrice) + ' menjadi ' + rupiahStr(newPrice));
+                alertify.success('Harga brg "' + item.name + '" terubah dr ' + rupiahStr(oldPrice) + ' menjadi ' + rupiahStr(newPrice) + ' per ' + item.grouping);
             });
           },
           function () {
