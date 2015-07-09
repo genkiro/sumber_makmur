@@ -237,6 +237,44 @@ Template.item.events({
             },
             function() { }
         );
+    },
+    'click .editItemName': function(e) {
+        e.preventDefault();
+
+        var parent = $(e.target).closest('tr');
+        var itemId = parent.data('id');
+        var item = Items.findOne({_id: itemId});
+        var oldName = item.name;
+
+        alertify.prompt('Ubah nama "' + oldName + '" menjadi apa?', oldName,
+          function (evt, newName) {
+            Items.update({ _id: itemId }, { $set: { name: newName }}, function () {
+                alertify.success('Nama "' + oldName + '" terubah menjadi "'  + newName + '"');
+            });
+          },
+          function () {
+            alertify.error('Cancel');
+          })
+        ;
+    },
+    'click .editItemPrice': function(e) {
+        e.preventDefault();
+
+        var parent = $(e.target).closest('tr');
+        var itemId = parent.data('id');
+        var item = Items.findOne({_id: itemId});
+        var oldPrice = item.price;
+
+        alertify.prompt('Ubah harga brg "' + item.name + '" dr ' + rupiahStr(oldPrice) + ' menjadi berapa Rupiah?', oldPrice,
+          function (evt, newPrice) {
+            Items.update({ _id: itemId }, { $set: { price: newPrice }}, function () {
+                alertify.success('Harga brg "' + item.name + '" terubah dr ' + rupiahStr(oldPrice) + ' menjadi ' + rupiahStr(newPrice));
+            });
+          },
+          function () {
+            alertify.error('Cancel');
+          })
+        ;
     }
 });
 
