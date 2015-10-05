@@ -138,8 +138,9 @@ var inputPageBehaviours = function(direction) {
                 who: $who.val()
             };
 
-            if ($('#paymentDelay').length > 0) {
-                txn.paymentDelay = $('#paymentDelay').val();
+            var payDelay = $('#paymentDelay').val();
+            if (payDelay) {
+                txn.paymentDelay = payDelay;
             }
 
             var txnId = Transactions.insert(txn);
