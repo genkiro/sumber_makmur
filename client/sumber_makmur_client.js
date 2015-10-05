@@ -70,9 +70,10 @@ var inputPageBehaviours = function(direction) {
     return {
         'click #addRow': function (e) {
             e.preventDefault();
-            $(e.target).closest('tr').before('<tr class="field"><td class="col-md-4"><input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" data-source="items"></td><td class="col-md-1"><div class="input-group"><input type="text" class="form-control itemQuantity kodi" placeholder="50"><div class="input-group-addon">kodi</div></div></td><td class="col-md-1"><div class="input-group"><input type="text" class="form-control itemQuantity lusin" placeholder="70"><div class="input-group-addon">lusin</div></div></td><td class="col-md-1"><div class="input-group"><input type="text" class="form-control itemQuantity potong" placeholder="0"><div class="input-group-addon">potong</div></div></td><td class="col-md-1"><button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button></td></tr>');
+            $(e.target).closest('tr').before('<tr class="field"><td><input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" data-source="items"></td><td><div class="input-group"><input type="text" class="form-control itemQuantity kodi"><div class="input-group-addon">kodi</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity lusin"><div class="input-group-addon">lusin</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity potong"><div class="input-group-addon">potong</div></div></td><td><input type="text" class="form-control soldFor rupiah"/></td><td><select class="form-control grouping"><option value="kodi">per kodi</option><option value="lusin">per lusin</option><option value="potong">per potong</option></select></td><td><button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button></td></tr>');
             $('.typeahead').typeahead({source: retrieveItemNames(), autoSelect: true});
             $('.itemQuantity').inputmask("integer");
+            $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
         },
         'click .removeRow': function (e) {
             e.preventDefault();
@@ -131,7 +132,17 @@ var inputPageBehaviours = function(direction) {
                 return;
             }
 
-            var txnId = Transactions.insert({ date: $('.tanggal').datepicker('getDate'), invoiceNo: $invoice.val(), who: $who.val() });
+            var txn = {
+                date: $('.tanggal').datepicker('getDate'),
+                invoiceNo: $invoice.val(),
+                who: $who.val()
+            };
+
+            if ($('#paymentDelay').length > 0) {
+                txn.paymentDelay = $('#paymentDelay').val();
+            }
+
+            var txnId = Transactions.insert(txn);
 
             $trField.each(function (index, el) {
                 var name = $(el).find('.itemName').val();
@@ -143,7 +154,14 @@ var inputPageBehaviours = function(direction) {
                 var quantity = quantifier.toNumber({ kodi: kodi, lusin: lusin, potong: potong });
                 var item = Items.findOne({name: name});
 
-                Mutations.insert({itemId: item._id, txnId: txnId, quantity: direction * quantity});
+                var toSave = {itemId: item._id, txnId: txnId, quantity: direction * quantity};
+
+                if ($(el).find('.soldFor').length > 0 && $(el).find('.grouping').length) {
+                    toSave.soldFor = Number($(el).find('.soldFor').val());
+                    toSave.grouping = $(el).find('.grouping').val();
+                }
+
+                Mutations.insert(toSave);
 
                 return name;
             });
@@ -161,6 +179,7 @@ Template.inboundForm.rendered = function () {
     bindDates();
     $('.typeahead').typeahead({ source: retrieveItemNames(), autoSelect: true });
     $('.itemQuantity').inputmask("integer");
+    $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
 };
 
 Template.inboundForm.helpers({
@@ -175,6 +194,7 @@ Template.outboundForm.rendered = function () {
     bindDates();
     $('.typeahead').typeahead({ source: retrieveItemNames(), autoSelect: true });
     $('.itemQuantity').inputmask("integer");
+    $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
 };
 
 Template.itemList.rendered = function () {
@@ -305,6 +325,7 @@ Template.stock.rendered = function() {
 
 Template.stockReport.rendered = function() {
     Meteor.call('createStockReport', function (error, result) {
+        // this is not ideal, should've do someTemplate.render(blaargh). It's more declarative that way. No need to mess with DOM.
         var total = 0;
         result.forEach(function (x) {
             $('tbody').append('<tr><td>' + x.name + '</td><td>' + x.quantity + '</td><td>' + rupiahStr(x.price) + ' per ' + x.groupingName + '</td><td class="text-right">' + rupiahStr(x.value) + '</td></tr>');

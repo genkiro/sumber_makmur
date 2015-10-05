@@ -145,52 +145,73 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="pabrik">Barang dijual ke:</label>
-                    <input type="who" class="form-control" id="who" placeholder="Piala Kapasan">
+                    <input type="text" class="form-control" id="who" placeholder="Piala Kapasan">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="invoice">Nomer nota / bon:</label>
                     <input type="text" class="form-control" id="invoice" placeholder="946">
                 </div>
+                <div class="form-group col-md-3">
+                    <label for="invoice">Janji dibayar dalam:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="paymentDelay" placeholder="30">
+                        <div class="input-group-addon">hari</div>
+                    </div>
+                </div>
             </div>
             <div class="container">
-                <div class="form-group col-md-9 pagination-centered text-center">
-                    <table class="table col-md-9">
+                <div class="form-group pagination-centered text-center">
+                    <table class="table">
                         <tbody>
                         <tr>
-                            <th class="col-md-4">Nama barang</th>
+                            <th class="col-md-3">Nama barang</th>
                             <th class="col-md-1">Jumlah</th>
                             <th class="col-md-1"></th>
                             <th class="col-md-1"></th>
+                            <th class="col-md-1">Harga (Rp.)</th>
+                            <th class="col-md-1">Satuan Harga</th>
                             <th class="col-md-1"></th>
                         </tr>
                         <tr class="field">
-                            <td class="col-md-4">
+                            <td>
                                 <input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" />
                             </td>
-                            <td class="col-md-1">
+                            <td>
                                 <div class="input-group">
                                     <input type="text" class="form-control itemQuantity kodi"/>
                                     <div class="input-group-addon">kodi</div>
                                 </div>
                             </td>
-                            <td class="col-md-1">
+                            <td>
                                 <div class="input-group">
                                     <input type="text" class="form-control itemQuantity lusin"/>
                                     <div class="input-group-addon">lusin</div>
                                 </div>
                             </td>
-                            <td class="col-md-1">
+                            <td>
                                 <div class="input-group">
                                     <input type="text" class="form-control itemQuantity potong"/>
                                     <div class="input-group-addon">potong</div>
                                 </div>
                             </td>
-                            <td class="col-md-1">
+                            <td>
+                                <input type="text" class="form-control soldFor rupiah"/>
+                            </td>
+                            <td>
+                                <select class="form-control grouping">
+                                    <option value="kodi">per kodi</option>
+                                    <option value="lusin">per lusin</option>
+                                    <option value="potong">per potong</option>
+                                </select>
+                            </td>
+                            <td>
                                 <button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button>
                             </td>
                         </tr>
                         <tr>
                             <td><button id="addRow" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
