@@ -75,7 +75,7 @@ var inputPageBehaviours = function(direction) {
             $(e.target).closest('tr').before(direction > 0 ? inputHtml : outputHtml);
             $('.typeahead').typeahead({source: retrieveItemNames(), autoSelect: true});
             $('.itemQuantity').inputmask("integer");
-            $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: ",", groupSize: 3 });
+            $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
         },
         'click .removeRow': function (e) {
             e.preventDefault();
@@ -160,8 +160,8 @@ var inputPageBehaviours = function(direction) {
                 var toSave = {itemId: item._id, txnId: txnId, quantity: direction * quantity};
 
                 if ($(el).find('.soldFor').length > 0 && $(el).find('.grouping').length) {
-                    toSave.soldFor = Number($(el).find('.soldFor').val());
-                    toSave.grouping = $(el).find('.grouping').val();
+                    toSave.soldFor = Number($(el).find('.soldFor').inputmask('unmaskedvalue'));
+                    toSave.soldForGrouping = $(el).find('.grouping').val();
                 }
 
                 Mutations.insert(toSave);
