@@ -1,6 +1,8 @@
 // counter starts at 0
 console.log('client file');
 
+pageSize = 25;
+
 // load a language
 numeral.language('id', {
     delimiters: {
@@ -338,13 +340,27 @@ Template.stockReport.rendered = function() {
     });
 };
 
+Template.transactions.rendered = function() {
+    Session.set('txnPaging', pageSize);
+};
+
 Template.transactions.helpers({
     transactions: function() {
-        return Transactions.find({});
+        return Transactions.find({}, {limit: Session.get('txnPaging'), sort: {date: -1}});
     }
 });
 
 Template.transactions.events({
+    'click #loadMore': function (e) {
+        e.preventDefault();
+        var lastVal = Session.get('txnPaging');
+
+        if (lastVal >= Transactions.find({}).count()) {
+            alertify.error('Habis');
+        } else {
+            Session.set('txnPaging', lastVal + pageSize);
+        }
+    },
     'click .txnInfo': function (e) {
         e.preventDefault();
         $(e.target).popover({placement: 'bottom', trigger: 'focus', html: true, content: function () {
