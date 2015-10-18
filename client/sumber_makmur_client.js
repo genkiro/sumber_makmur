@@ -75,7 +75,15 @@ var inputPageBehaviours = function(direction) {
             var inputHtml = '<tr class="field"><td><input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" data-source="items"></td><td><div class="input-group"><input type="text" class="form-control itemQuantity kodi"><div class="input-group-addon">kodi</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity lusin"><div class="input-group-addon">lusin</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity potong"><div class="input-group-addon">potong</div></div></td><td><button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
             var outputHtml = '<tr class="field"><td><input type="text" class="form-control typeahead itemName" placeholder="Handuk KH 101" data-source="items"></td><td><div class="input-group"><input type="text" class="form-control itemQuantity kodi"><div class="input-group-addon">kodi</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity lusin"><div class="input-group-addon">lusin</div></div></td><td><div class="input-group"><input type="text" class="form-control itemQuantity potong"><div class="input-group-addon">potong</div></div></td><td><input type="text" class="form-control soldFor rupiah"/></td><td><select class="form-control grouping"><option value="kodi">per kodi</option><option value="lusin">per lusin</option><option value="potong">per potong</option></select></td><td><button class="btn btn-danger removeRow"><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
             $(e.target).closest('tr').before(direction > 0 ? inputHtml : outputHtml);
-            $('.typeahead').typeahead({source: retrieveItemNames(), autoSelect: true});
+            var $typeahead = $('.typeahead');
+            $typeahead.typeahead({source: retrieveItemNames(), autoSelect: true});
+            $typeahead.change(function() {
+                var tr = $(this).closest('tr');
+                var itemName = tr.find('.itemName').val();
+                var item = Items.findOne({ name: itemName });
+                tr.find('select.grouping').val(item.grouping);
+            });
+
             $('.itemQuantity').inputmask("integer");
             $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
         },
@@ -182,7 +190,15 @@ Template.inboundForm.events(inputPageBehaviours(1));
 
 Template.inboundForm.rendered = function () {
     bindDates();
-    $('.typeahead').typeahead({ source: retrieveItemNames(), autoSelect: true });
+    var $typeahead = $('.typeahead');
+    $typeahead.typeahead({ source: retrieveItemNames(), autoSelect: true });
+    $typeahead.change(function() {
+        var tr = $(this).closest('tr');
+        var itemName = tr.find('.itemName').val();
+        var item = Items.findOne({ name: itemName });
+        tr.find('select.grouping').val(item.grouping);
+    });
+
     $('.itemQuantity').inputmask("integer");
     $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
 };
@@ -197,7 +213,15 @@ Template.outboundForm.events(inputPageBehaviours(-1));
 
 Template.outboundForm.rendered = function () {
     bindDates();
-    $('.typeahead').typeahead({ source: retrieveItemNames(), autoSelect: true });
+    var $typeahead = $('.typeahead');
+    $typeahead.typeahead({ source: retrieveItemNames(), autoSelect: true });
+    $typeahead.change(function() {
+        var tr = $(this).closest('tr');
+        var itemName = tr.find('.itemName').val();
+        var item = Items.findOne({ name: itemName });
+        tr.find('select.grouping').val(item.grouping);
+    });
+
     $('.itemQuantity').inputmask("integer");
     $('.rupiah').inputmask("integer", { autoGroup: true, groupSeparator: " ", groupSize: 3 });
 };
