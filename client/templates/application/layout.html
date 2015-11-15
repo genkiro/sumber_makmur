@@ -38,6 +38,11 @@
                         <a href="{{pathFor 'stockReport'}}"><span class="glyphicon glyphicon-list-alt" style="font-size: 4em;"></span><div>Laporan Stok Brg</div></a>
                     </div>
                 </li>
+                <li>
+                    <div class="container">
+                        <a href="{{pathFor 'performance'}}"><span class="glyphicon glyphicon-scale" style="font-size: 4em;"></span><div>Performance</div></a>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -359,4 +364,14 @@
         <td><button class="btn btn-info txnInfo">Details</button></td>
         <td><button class="btn btn-danger deleteTxn"><span class="glyphicon glyphicon-remove"></span></button></td>
     </tr>
+</template>
+
+<template name="performance">
+    <div class="container">
+        <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+            <span></span> <b class="caret"></b>
+        </div>
+    </div>
+
 </template>

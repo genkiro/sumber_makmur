@@ -29,3 +29,5 @@ ejson
 spacebars
 check
 houston:admin
+momentjs:moment
+dangrossman:bootstrap-daterangepicker
