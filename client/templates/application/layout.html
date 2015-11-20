@@ -374,6 +374,25 @@
         </div>
     </div>
 
-    <div class="container">Number of Transactions: {{nTxns}}</div>
+    <div class="container"><br/></div>
+
+    <div class="container col-md-8 text-center">
+        <table class="table table-hover table-condensed">
+            <tbody>
+                <tr><th>Frekuensi Penjualan</th>    <td class="text-right">{{o.nSale}}</td><td></td></tr>
+            </tbody>
+            <tbody>
+                <tr><th>Total Omset</th>            <td class="text-right">{{rupiah o.totRevenue}}</td><td></td></tr>
+                <tr><th>Total Harga Pokok</th>      <td class="text-right">({{rupiah o.totBuyingPrice}})</td><td></td></tr>
+            </tbody>
+            <tbody>
+                <tr><th>Total Laba</th>             <td class="text-right">{{rupiah o.totMargin}}</td><td>({{o.totMarginPerc}} % dr Total Omset)</td></tr>
+                <tr><th>Total Biaya Bunga</th>      <td class="text-right">({{rupiah o.totDelayCost}})</td><td></td></tr>
+            </tbody>
+            <tbody>
+                <tr><th>Total Profit Sebelum Ongkos</th>     <td class="text-right">{{rupiah o.totProfitBeforeCost}}</td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
 
 </template>
