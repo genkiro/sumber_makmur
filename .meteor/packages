@@ -31,3 +31,5 @@ check
 houston:admin
 momentjs:moment
 dangrossman:bootstrap-daterangepicker
+accounts-password
+ian:accounts-ui-bootstrap-3
