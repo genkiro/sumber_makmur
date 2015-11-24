@@ -8,6 +8,7 @@ var totMargin = new Blaze.ReactiveVar();
 var totMarginPerc = new Blaze.ReactiveVar();
 var totDelayCost = new Blaze.ReactiveVar();
 var totProfitBeforeCost = new Blaze.ReactiveVar();
+var mutations = new Blaze.ReactiveVar();
 
 Template.performance.rendered = function () {
     function cb(start, end) {
@@ -16,6 +17,7 @@ Template.performance.rendered = function () {
         totBuyingPrice.set('loading..');
         totMargin.set('loading..');
         totMarginPerc.set('loading..');
+        mutations.set([]);
 
         var s = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
         $('#reportrange span').html(s);
@@ -31,6 +33,7 @@ Template.performance.rendered = function () {
             totMarginPerc.set(result.totMarginPerc);
             totDelayCost.set(result.totDelayCost);
             totProfitBeforeCost.set(result.totProfitBeforeCost);
+            mutations.set(result.mutations);
         });
     }
     cb(moment().subtract(29, 'days'), moment());
@@ -57,7 +60,8 @@ Template.performance.helpers({
             totMargin: totMargin.get(),
             totMarginPerc: totMarginPerc.get(),
             totDelayCost: totDelayCost.get(),
-            totProfitBeforeCost: totProfitBeforeCost.get()
+            totProfitBeforeCost: totProfitBeforeCost.get(),
+            mutations: mutations.get()
         };
     }
 });
